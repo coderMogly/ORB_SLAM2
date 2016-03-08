@@ -28,15 +28,15 @@
 // - Added EdgeInverseSim3ProjectXYZ 
 // - Modified VertexSim3Expmap to represent relative transformation between two cameras. Includes calibration of both cameras.
 
-#ifndef G2O_SEVEN_DOF_EXPMAP_TYPES
-#define G2O_SEVEN_DOF_EXPMAP_TYPES
+#ifndef ORB_SLAM2_G2O_SEVEN_DOF_EXPMAP_TYPES
+#define ORB_SLAM2_G2O_SEVEN_DOF_EXPMAP_TYPES
 
 #include "../core/base_vertex.h"
 #include "../core/base_binary_edge.h"
 #include "types_six_dof_expmap.h"
 #include "sim3.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace Eigen;
 

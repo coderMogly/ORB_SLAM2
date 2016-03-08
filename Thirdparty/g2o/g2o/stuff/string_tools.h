@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_STRING_TOOLS_H
-#define G2O_STRING_TOOLS_H
+#ifndef ORB_SLAM2_G2O_STRING_TOOLS_H
+#define ORB_SLAM2_G2O_STRING_TOOLS_H
 
 #include <string>
 #include <sstream>
@@ -34,7 +34,7 @@
 
 #include "macros.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 /** @addtogroup utils **/
 // @{
@@ -110,12 +110,12 @@ OutputIterator readFloats(const char* str, OutputIterator out)
  * format a string and return a std::string.
  * Format is just like printf, see man 3 printf
  */
- std::string formatString(const char* fmt, ...) G2O_ATTRIBUTE_FORMAT12;
+ std::string formatString(const char* fmt, ...) ORB_SLAM2_G2O_ATTRIBUTE_FORMAT12;
 
 /**
  * replacement function for sprintf which fills a std::string instead of a char*
  */
- int strPrintf(std::string& str, const char* fmt, ...) G2O_ATTRIBUTE_FORMAT23;
+ int strPrintf(std::string& str, const char* fmt, ...) ORB_SLAM2_G2O_ATTRIBUTE_FORMAT23;
 
 /**
  * convert a string into an other type.

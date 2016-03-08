@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_ROBUST_KERNEL_FACTORY_H
-#define G2O_ROBUST_KERNEL_FACTORY_H
+#ifndef ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_H
+#define ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_H
 
 #include "../stuff/misc.h"
 
@@ -34,7 +34,7 @@
 #include <vector>
 #include <iostream>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   class RobustKernel;
 
@@ -129,23 +129,23 @@ namespace g2o {
       std::string _name;
   };
 
-#if defined _MSC_VER && defined G2O_SHARED_LIBS
-#  define G2O_ROBUST_KERNEL_FACTORY_EXPORT __declspec(dllexport)
-#  define G2O_ROBUST_KERNEL_FACTORY_IMPORT __declspec(dllimport)
+#if defined _MSC_VER && defined ORB_SLAM2_G2O_SHARED_LIBS
+#  define ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_EXPORT __declspec(dllexport)
+#  define ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_IMPORT __declspec(dllimport)
 #else
-#  define G2O_ROBUST_KERNEL_FACTORY_EXPORT
-#  define G2O_ROBUST_KERNEL_FACTORY_IMPORT
+#  define ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_EXPORT
+#  define ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_IMPORT
 #endif
 
   // These macros are used to automate registering of robust kernels and forcing linkage
-#define G2O_REGISTER_ROBUST_KERNEL(name, classname) \
-    extern "C" void G2O_ROBUST_KERNEL_FACTORY_EXPORT g2o_robust_kernel_##classname(void) {} \
-    static g2o::RegisterRobustKernelProxy<classname> g_robust_kernel_proxy_##classname(#name);
+#define ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(name, classname) \
+    extern "C" void ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_EXPORT ORB_SLAM2_g2o_robust_kernel_##classname(void) {} \
+    static ORB_SLAM2_g2o::RegisterRobustKernelProxy<classname> g_robust_kernel_proxy_##classname(#name);
 
-#define G2O_USE_ROBUST_KERNEL(classname) \
-    extern "C" void G2O_ROBUST_KERNEL_FACTORY_IMPORT g2o_robust_kernel_##classname(void); \
-    static g2o::TypeFunctionProxy proxy_##classname(g2o_robust_kernel_##classname);
+#define ORB_SLAM2_G2O_USE_ROBUST_KERNEL(classname) \
+    extern "C" void ORB_SLAM2_G2O_ROBUST_KERNEL_FACTORY_IMPORT ORB_SLAM2_g2o_robust_kernel_##classname(void); \
+    static ORB_SLAM2_g2o::TypeFunctionProxy proxy_##classname(ORB_SLAM2_g2o_robust_kernel_##classname);
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o
 
 #endif

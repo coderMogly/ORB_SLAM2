@@ -35,7 +35,7 @@
 #include "../stuff/color_macros.h"
 #include "../stuff/string_tools.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace std;
 

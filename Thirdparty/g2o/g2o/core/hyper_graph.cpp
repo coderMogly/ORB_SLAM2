@@ -29,7 +29,7 @@
 #include <assert.h>
 #include <queue>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   HyperGraph::Vertex::Vertex(int id) : _id(id)
   {

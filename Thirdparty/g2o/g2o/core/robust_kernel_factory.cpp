@@ -31,7 +31,7 @@
 
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 RobustKernelFactory* RobustKernelFactory::factoryInstance = 0;
 

@@ -35,11 +35,11 @@ class Converter
 public:
     static std::vector<cv::Mat> toDescriptorVector(const cv::Mat &Descriptors);
 
-    static g2o::SE3Quat toSE3Quat(const cv::Mat &cvT);
-    static g2o::SE3Quat toSE3Quat(const g2o::Sim3 &gSim3);
+    static ORB_SLAM2_g2o::SE3Quat toSE3Quat(const cv::Mat &cvT);
+    static ORB_SLAM2_g2o::SE3Quat toSE3Quat(const ORB_SLAM2_g2o::Sim3 &gSim3);
 
-    static cv::Mat toCvMat(const g2o::SE3Quat &SE3);
-    static cv::Mat toCvMat(const g2o::Sim3 &Sim3);
+    static cv::Mat toCvMat(const ORB_SLAM2_g2o::SE3Quat &SE3);
+    static cv::Mat toCvMat(const ORB_SLAM2_g2o::Sim3 &Sim3);
     static cv::Mat toCvMat(const Eigen::Matrix<double,4,4> &m);
     static cv::Mat toCvMat(const Eigen::Matrix3d &m);
     static cv::Mat toCvMat(const Eigen::Matrix<double,3,1> &m);

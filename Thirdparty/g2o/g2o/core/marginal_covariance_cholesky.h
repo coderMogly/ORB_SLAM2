@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_MARGINAL_COVARIANCE_CHOLESKY_H
-#define G2O_MARGINAL_COVARIANCE_CHOLESKY_H
+#ifndef ORB_SLAM2_G2O_MARGINAL_COVARIANCE_CHOLESKY_H
+#define ORB_SLAM2_G2O_MARGINAL_COVARIANCE_CHOLESKY_H
 
 #include "optimizable_graph.h"
 #include "sparse_block_matrix.h"
@@ -40,7 +40,7 @@
 #endif
 
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   /**
    * \brief computing the marginal covariance given a cholesky factor (lower triangle of the factor)

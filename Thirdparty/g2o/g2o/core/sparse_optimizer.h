@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_GRAPH_OPTIMIZER_CHOL_H_
-#define G2O_GRAPH_OPTIMIZER_CHOL_H_
+#ifndef ORB_SLAM2_G2O_GRAPH_OPTIMIZER_CHOL_H_
+#define ORB_SLAM2_G2O_GRAPH_OPTIMIZER_CHOL_H_
 
 #include "../stuff/macros.h"
 
@@ -35,7 +35,7 @@
 
 #include <map>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   // forward declaration
   class ActivePathCostFunction;
@@ -253,7 +253,7 @@ namespace g2o {
      * Linearizes the system by computing the Jacobians for the nodes
      * and edges in the graph
      */
-    G2O_ATTRIBUTE_DEPRECATED(void linearizeSystem())
+    ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(void linearizeSystem())
     {
       // nothing needed, linearization is now done inside the solver
     }

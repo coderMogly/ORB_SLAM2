@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_SPARSE_BLOCK_MATRIX_
-#define G2O_SPARSE_BLOCK_MATRIX_
+#ifndef ORB_SLAM2_G2O_SPARSE_BLOCK_MATRIX_
+#define ORB_SLAM2_G2O_SPARSE_BLOCK_MATRIX_
 
 #include <map>
 #include <vector>
@@ -40,7 +40,7 @@
 #include "matrix_operations.h"
 #include "../../config.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace Eigen;
 /**
  * \brief Sparse matrix which uses blocks

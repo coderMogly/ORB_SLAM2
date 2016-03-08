@@ -38,7 +38,7 @@
 
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 Factory* Factory::factoryInstance = 0;
 
@@ -48,7 +48,7 @@ Factory::Factory()
 
 Factory::~Factory()
 {
-# ifdef G2O_DEBUG_FACTORY
+# ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
   cerr << "# Factory destroying " << (void*)this << endl;
 # endif
   for (CreatorMap::iterator it = _creator.begin(); it != _creator.end(); ++it) {
@@ -62,7 +62,7 @@ Factory* Factory::instance()
 {
   if (factoryInstance == 0) {
     factoryInstance = new Factory;
-#  ifdef G2O_DEBUG_FACTORY
+#  ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
     cerr << "# Factory allocated " << (void*)factoryInstance << endl;
 #  endif
   }
@@ -86,14 +86,14 @@ void Factory::registerType(const std::string& tag, AbstractHyperGraphElementCrea
   CreatorInformation* ci = new CreatorInformation();
   ci->creator = c;
 
-#ifdef G2O_DEBUG_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
   cerr << "# Factory " << (void*)this << " constructing type " << tag << " ";
 #endif
   // construct an element once to figure out its type
   HyperGraph::HyperGraphElement* element = c->construct();
   ci->elementTypeBit = element->elementType();
 
-#ifdef G2O_DEBUG_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
   cerr << "done." << endl;
   cerr << "# Factory " << (void*)this << " registering " << tag;
   cerr << " " << (void*) c << " ";

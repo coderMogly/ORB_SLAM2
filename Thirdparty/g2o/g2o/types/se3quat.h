@@ -24,15 +24,15 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_SE3QUAT_H_
-#define G2O_SE3QUAT_H_
+#ifndef ORB_SLAM2_G2O_SE3QUAT_H_
+#define ORB_SLAM2_G2O_SE3QUAT_H_
 
 #include "se3_ops.h"
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace Eigen;
 
   typedef Matrix<double, 6, 1> Vector6d;

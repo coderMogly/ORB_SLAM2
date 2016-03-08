@@ -24,7 +24,7 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace Eigen;
 
   namespace {
@@ -66,7 +66,7 @@ namespace g2o {
 
   template <class MatrixType>
   void SparseBlockMatrix<MatrixType>::clear(bool dealloc) {
-#   ifdef G2O_OPENMP
+#   ifdef ORB_SLAM2_G2O_OPENMP
 #   pragma omp parallel for default (shared) if (_blockCols.size() > 100)
 #   endif
     for (int i=0; i < static_cast<int>(_blockCols.size()); ++i) {
@@ -294,7 +294,7 @@ namespace g2o {
     Eigen::Map<VectorXd> destVec(dest, destSize);
     Eigen::Map<const VectorXd> srcVec(src, rows());
 
-#   ifdef G2O_OPENMP
+#   ifdef ORB_SLAM2_G2O_OPENMP
 #   pragma omp parallel for default (shared) schedule(dynamic, 10)
 #   endif
     for (int i=0; i < static_cast<int>(_blockCols.size()); ++i){

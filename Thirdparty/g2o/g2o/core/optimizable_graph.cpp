@@ -46,7 +46,7 @@
 #include "../stuff/string_tools.h"
 #include "../stuff/misc.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace std;
 
@@ -900,7 +900,7 @@ bool OptimizableGraph::verifyInformationMatrices(bool verbose) const
 
 bool OptimizableGraph::initMultiThreading()
 {
-# if (defined G2O_OPENMP) && EIGEN_VERSION_AT_LEAST(3,1,0)
+# if (defined ORB_SLAM2_G2O_OPENMP) && EIGEN_VERSION_AT_LEAST(3,1,0)
   Eigen::initParallel();
 # endif
   return true;

@@ -29,7 +29,7 @@
 #include <cstring>
 #include <algorithm>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 Solver::Solver() :
   _optimizer(0), _x(0), _b(0), _xSize(0), _maxXSize(0),

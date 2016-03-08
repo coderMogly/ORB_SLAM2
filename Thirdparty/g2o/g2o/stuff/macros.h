@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_MACROS_H
-#define G2O_MACROS_H
+#ifndef ORB_SLAM2_G2O_MACROS_H
+#define ORB_SLAM2_G2O_MACROS_H
 
 #ifndef DEG2RAD
 #define DEG2RAD(x) ((x) * 0.01745329251994329575)
@@ -37,24 +37,24 @@
 
 // GCC the one and only
 #if defined(__GNUC__)
-#  define G2O_ATTRIBUTE_CONSTRUCTOR(func) \
+#  define ORB_SLAM2_G2O_ATTRIBUTE_CONSTRUCTOR(func) \
      static void func(void)__attribute__ ((constructor)); \
      static void func(void)
 
-#  define G2O_ATTRIBUTE_UNUSED __attribute__((unused))
-#  define G2O_ATTRIBUTE_FORMAT12 __attribute__ ((format (printf, 1, 2)))
-#  define G2O_ATTRIBUTE_FORMAT23 __attribute__ ((format (printf, 2, 3)))
-#  define G2O_ATTRIBUTE_WARNING(func) func __attribute__((warning))
-#  define G2O_ATTRIBUTE_DEPRECATED(func) func __attribute__((deprecated))
+#  define ORB_SLAM2_G2O_ATTRIBUTE_UNUSED __attribute__((unused))
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT12 __attribute__ ((format (printf, 1, 2)))
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT23 __attribute__ ((format (printf, 2, 3)))
+#  define ORB_SLAM2_G2O_ATTRIBUTE_WARNING(func) func __attribute__((warning))
+#  define ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(func) func __attribute__((deprecated))
 
 #ifdef ANDROID
-# define g2o_isnan(x)     isnan(x)
-# define g2o_isinf(x)     isinf(x)
-# define g2o_isfinite(x)  isfinite(x)
+# define ORB_SLAM2_g2o_isnan(x)     isnan(x)
+# define ORB_SLAM2_g2o_isinf(x)     isinf(x)
+# define ORB_SLAM2_g2o_isfinite(x)  isfinite(x)
 #else
-# define g2o_isnan(x)     std::isnan(x)
-# define g2o_isinf(x)     std::isinf(x)
-# define g2o_isfinite(x)  std::isfinite(x)
+# define ORB_SLAM2_g2o_isnan(x)     std::isnan(x)
+# define ORB_SLAM2_g2o_isinf(x)     std::isinf(x)
+# define ORB_SLAM2_g2o_isfinite(x)  std::isfinite(x)
 #endif
 
 // MSVC on Windows
@@ -71,47 +71,47 @@ Modified by Mark Pupilli from:
 
 	(As posted on Stack OVerflow)
 */
-#  define G2O_ATTRIBUTE_CONSTRUCTOR(f) \
+#  define ORB_SLAM2_G2O_ATTRIBUTE_CONSTRUCTOR(f) \
      __pragma(section(".CRT$XCU",read)) \
      static void __cdecl f(void); \
      __declspec(allocate(".CRT$XCU")) void (__cdecl*f##_)(void) = f; \
      static void __cdecl f(void)
 
-#  define G2O_ATTRIBUTE_UNUSED
-#  define G2O_ATTRIBUTE_FORMAT12
-#  define G2O_ATTRIBUTE_FORMAT23
-#  define G2O_ATTRIBUTE_WARNING(func) func
-#  define G2O_ATTRIBUTE_DEPRECATED(func) func
+#  define ORB_SLAM2_G2O_ATTRIBUTE_UNUSED
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT12
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT23
+#  define ORB_SLAM2_G2O_ATTRIBUTE_WARNING(func) func
+#  define ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(func) func
 
 #include <float.h>
 
-# define g2o_isnan(x)    _isnan(x)
-# define g2o_isinf(x)    (_finite(x) == 0)
-# define g2o_isfinite(x) (_finite(x) != 0)
+# define ORB_SLAM2_g2o_isnan(x)    _isnan(x)
+# define ORB_SLAM2_g2o_isinf(x)    (_finite(x) == 0)
+# define ORB_SLAM2_g2o_isfinite(x) (_finite(x) != 0)
 
 // unknown compiler
 #else
 #  ifndef __PRETTY_FUNCTION__
 #    define __PRETTY_FUNCTION__ ""
 #  endif
-#  define G2O_ATTRIBUTE_CONSTRUCTOR(func) func
-#  define G2O_ATTRIBUTE_UNUSED
-#  define G2O_ATTRIBUTE_FORMAT12
-#  define G2O_ATTRIBUTE_FORMAT23
-#  define G2O_ATTRIBUTE_WARNING(func) func
-#  define G2O_ATTRIBUTE_DEPRECATED(func) func
+#  define ORB_SLAM2_G2O_ATTRIBUTE_CONSTRUCTOR(func) func
+#  define ORB_SLAM2_G2O_ATTRIBUTE_UNUSED
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT12
+#  define ORB_SLAM2_G2O_ATTRIBUTE_FORMAT23
+#  define ORB_SLAM2_G2O_ATTRIBUTE_WARNING(func) func
+#  define ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(func) func
 
 #include <math.h>
-#define g2o_isnan(x)    isnan(x)
-#define g2o_isinf(x)    isinf(x)
-#define g2o_isfinite(x) isfinite(x)
+#define ORB_SLAM2_g2o_isnan(x)    isnan(x)
+#define ORB_SLAM2_g2o_isinf(x)    isinf(x)
+#define ORB_SLAM2_g2o_isfinite(x) isfinite(x)
 
 #endif
 
 // some macros that are only useful for c++
 #ifdef __cplusplus
 
-#define G2O_FSKIP_LINE(f) \
+#define ORB_SLAM2_G2O_FSKIP_LINE(f) \
    {char c=' ';while(c != '\n' && f.good() && !(f).eof()) (f).get(c);}
 
 #ifndef PVAR

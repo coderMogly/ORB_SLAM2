@@ -36,7 +36,7 @@
 #include "batch_stats.h"
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   OptimizationAlgorithmDogleg::OptimizationAlgorithmDogleg(BlockSolverBase* solver) :
     OptimizationAlgorithmWithHessian(solver)

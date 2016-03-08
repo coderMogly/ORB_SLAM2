@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_TIMEUTIL_H
-#define G2O_TIMEUTIL_H
+#ifndef ORB_SLAM2_G2O_TIMEUTIL_H
+#define ORB_SLAM2_G2O_TIMEUTIL_H
 
 #ifdef _WINDOWS
 #include <time.h>
@@ -62,20 +62,20 @@ if (1) {\
 
 /// Executes code, only if secs are gone since last exec.
 #ifndef DO_EVERY
-#define DO_EVERY(secs, code) DO_EVERY_TS(secs, g2o::get_time(), code)
+#define DO_EVERY(secs, code) DO_EVERY_TS(secs, ORB_SLAM2_g2o::get_time(), code)
 #endif
 
 #ifndef MEASURE_TIME
 #define MEASURE_TIME(text, code) \
   if(1) { \
-    double _start_time_ = g2o::get_time(); \
+    double _start_time_ = ORB_SLAM2_g2o::get_time(); \
     code; \
-    fprintf(stderr, "%s took %f sec\n", text, g2o::get_time() - _start_time_); \
+    fprintf(stderr, "%s took %f sec\n", text, ORB_SLAM2_g2o::get_time() - _start_time_); \
   } else \
     (void) 0
 #endif
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 #ifdef _WINDOWS
 typedef struct timeval {
@@ -124,7 +124,7 @@ class  ScopeTime {
 
 #ifndef MEASURE_FUNCTION_TIME
 #define MEASURE_FUNCTION_TIME \
-  g2o::ScopeTime scopeTime(__PRETTY_FUNCTION__)
+  ORB_SLAM2_g2o::ScopeTime scopeTime(__PRETTY_FUNCTION__)
 #endif
 
 

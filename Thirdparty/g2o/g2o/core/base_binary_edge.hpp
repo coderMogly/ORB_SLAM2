@@ -66,7 +66,7 @@ void BaseBinaryEdge<D, E, VertexXiType, VertexXjType>::constructQuadraticForm()
   bool toNotFixed = !(to->fixed());
 
   if (fromNotFixed || toNotFixed) {
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
     from->lockQuadraticForm();
     to->lockQuadraticForm();
 #endif
@@ -112,7 +112,7 @@ void BaseBinaryEdge<D, E, VertexXiType, VertexXjType>::constructQuadraticForm()
         to->A().noalias() += B.transpose() * weightedOmega * B;
       }
     }
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
     to->unlockQuadraticForm();
     from->unlockQuadraticForm();
 #endif
@@ -139,7 +139,7 @@ void BaseBinaryEdge<D, E, VertexXiType, VertexXjType>::linearizeOplus()
   if (!iNotFixed && !jNotFixed)
     return;
 
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
   vi->lockQuadraticForm();
   vj->lockQuadraticForm();
 #endif
@@ -198,7 +198,7 @@ void BaseBinaryEdge<D, E, VertexXiType, VertexXjType>::linearizeOplus()
   } // end dimension
 
   _error = errorBeforeNumeric;
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
   vj->unlockQuadraticForm();
   vi->unlockQuadraticForm();
 #endif

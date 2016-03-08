@@ -43,7 +43,7 @@
 #include "../stuff/misc.h"
 #include "../../config.h"
 
-namespace g2o{
+namespace ORB_SLAM2_g2o{
   using namespace std;
 
 
@@ -67,7 +67,7 @@ namespace g2o{
         (*(*it))(this);
     }
 
-#   ifdef G2O_OPENMP
+#   ifdef ORB_SLAM2_G2O_OPENMP
 #   pragma omp parallel for default (shared) if (_activeEdges.size() > 50)
 #   endif
     for (int k = 0; k < static_cast<int>(_activeEdges.size()); ++k) {

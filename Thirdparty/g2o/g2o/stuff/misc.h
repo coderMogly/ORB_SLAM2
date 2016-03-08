@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_STUFF_MISC_H
-#define G2O_STUFF_MISC_H
+#ifndef ORB_SLAM2_G2O_STUFF_MISC_H
+#define ORB_SLAM2_G2O_STUFF_MISC_H
 
 #include "macros.h"
 #include <cmath>
@@ -43,7 +43,7 @@
  *  This file specifies some general case utility functions
  **/
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 /**
  * return the square value
@@ -177,7 +177,7 @@ inline T wrap(T l, T x, T u)
 inline bool arrayHasNaN(const double* array, int size, int* nanIndex = 0)
 {
   for (int i = 0; i < size; ++i)
-    if (g2o_isnan(array[i])) {
+    if (ORB_SLAM2_g2o_isnan(array[i])) {
       if (nanIndex)
         *nanIndex = i;
       return true;

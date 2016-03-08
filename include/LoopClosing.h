@@ -46,8 +46,8 @@ class LoopClosing
 public:
 
     typedef pair<set<KeyFrame*>,int> ConsistentGroup;    
-    typedef map<KeyFrame*,g2o::Sim3,std::less<KeyFrame*>,
-        Eigen::aligned_allocator<std::pair<const KeyFrame*, g2o::Sim3> > > KeyFrameAndPose;
+    typedef map<KeyFrame*,ORB_SLAM2_g2o::Sim3,std::less<KeyFrame*>,
+        Eigen::aligned_allocator<std::pair<const KeyFrame*, ORB_SLAM2_g2o::Sim3> > > KeyFrameAndPose;
 
 public:
 
@@ -128,7 +128,7 @@ protected:
     std::vector<MapPoint*> mvpCurrentMatchedPoints;
     std::vector<MapPoint*> mvpLoopMapPoints;
     cv::Mat mScw;
-    g2o::Sim3 mg2oScw;
+    ORB_SLAM2_g2o::Sim3 mg2oScw;
 
     long unsigned int mLastLoopKFid;
 

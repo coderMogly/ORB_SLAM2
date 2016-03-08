@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_HYPER_GRAPH_ACTION_H
-#define G2O_HYPER_GRAPH_ACTION_H
+#ifndef ORB_SLAM2_G2O_HYPER_GRAPH_ACTION_H
+#define ORB_SLAM2_G2O_HYPER_GRAPH_ACTION_H
 
 #include "hyper_graph.h"
 #include "../stuff/property.h"
@@ -38,9 +38,9 @@
 
 
 // define to get verbose output
-//#define G2O_DEBUG_ACTIONLIB
+//#define ORB_SLAM2_G2O_DEBUG_ACTIONLIB
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   /**
    * \brief Abstract action that operates on an entire graph
@@ -194,7 +194,7 @@ namespace g2o {
       public:
       RegisterActionProxy()
           {
-#ifdef G2O_DEBUG_ACTIONLIB
+#ifdef ORB_SLAM2_G2O_DEBUG_ACTIONLIB
             std::cout << __FUNCTION__ << ": Registering action of type " << typeid(T).name() << std::endl;
 #endif
             _action = new T();
@@ -203,7 +203,7 @@ namespace g2o {
       
         ~RegisterActionProxy()
           {
-#ifdef G2O_DEBUG_ACTIONLIB
+#ifdef ORB_SLAM2_G2O_DEBUG_ACTIONLIB
             std::cout << __FUNCTION__ << ": Unregistering action of type " << typeid(T).name() << std::endl;
 #endif
             HyperGraphActionLibrary::instance()->unregisterAction(_action);
@@ -214,9 +214,9 @@ namespace g2o {
         HyperGraphElementAction* _action;
   };
 
-#define G2O_REGISTER_ACTION(classname) \
-    extern "C" void g2o_action_##classname(void) {} \
-    static g2o::RegisterActionProxy<classname> g_action_proxy_##classname;
+#define ORB_SLAM2_G2O_REGISTER_ACTION(classname) \
+    extern "C" void ORB_SLAM2_g2o_action_##classname(void) {} \
+    static ORB_SLAM2_g2o::RegisterActionProxy<classname> g_action_proxy_##classname;
 };
 
 #endif

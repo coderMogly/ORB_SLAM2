@@ -32,7 +32,7 @@
 
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 JacobianWorkspace::JacobianWorkspace() :
   _maxNumVertices(-1), _maxDimension(-1)

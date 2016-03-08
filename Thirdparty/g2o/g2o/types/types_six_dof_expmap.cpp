@@ -29,7 +29,7 @@
 #include "../core/factory.h"
 #include "../stuff/macros.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 using namespace std;
 

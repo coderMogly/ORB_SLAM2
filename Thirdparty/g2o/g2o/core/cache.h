@@ -24,14 +24,14 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_CACHE_HH_
-#define G2O_CACHE_HH_
+#ifndef ORB_SLAM2_G2O_CACHE_HH_
+#define ORB_SLAM2_G2O_CACHE_HH_
 
 #include <map>
 
 #include "optimizable_graph.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   class CacheContainer;
   

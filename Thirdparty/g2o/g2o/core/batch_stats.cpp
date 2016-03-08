@@ -27,7 +27,7 @@
 #include "batch_stats.h"
 #include <cstring>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace std;
 
   G2OBatchStatistics* G2OBatchStatistics::_globalStats=0;
