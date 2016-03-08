@@ -26,7 +26,7 @@
 
 #include "types_seven_dof_expmap.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   VertexSim3Expmap::VertexSim3Expmap() : BaseVertex<7, Sim3>()
   {

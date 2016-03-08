@@ -32,7 +32,7 @@
 
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   AbstractOptimizationAlgorithmCreator::AbstractOptimizationAlgorithmCreator(const OptimizationAlgorithmProperty& p) :
     _property(p)

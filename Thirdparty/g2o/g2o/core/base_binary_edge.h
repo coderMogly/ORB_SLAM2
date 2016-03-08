@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_BASE_BINARY_EDGE_H
-#define G2O_BASE_BINARY_EDGE_H
+#ifndef ORB_SLAM2_G2O_BASE_BINARY_EDGE_H
+#define ORB_SLAM2_G2O_BASE_BINARY_EDGE_H
 
 #include <iostream>
 #include <limits>
@@ -34,7 +34,7 @@
 #include "robust_kernel.h"
 #include "../../config.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace Eigen;
 
@@ -114,6 +114,6 @@ namespace g2o {
 
 #include "base_binary_edge.hpp"
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o
 
 #endif

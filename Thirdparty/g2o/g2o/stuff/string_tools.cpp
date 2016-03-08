@@ -41,7 +41,7 @@
 #include <wordexp.h>
 #endif
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 using namespace std;
 
@@ -178,7 +178,7 @@ int readLine(std::istream& is, std::stringstream& currentLine)
   is.get(*currentLine.rdbuf());
   if (is.fail()) // fail is set on empty lines
     is.clear();
-  G2O_FSKIP_LINE(is); // read \n not read by get()
+  ORB_SLAM2_G2O_FSKIP_LINE(is); // read \n not read by get()
   return static_cast<int>(currentLine.str().size());
 }
 

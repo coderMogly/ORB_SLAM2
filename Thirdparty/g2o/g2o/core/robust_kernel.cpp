@@ -26,7 +26,7 @@
 
 #include "robust_kernel.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 RobustKernel::RobustKernel() :
   _delta(1.)
@@ -43,4 +43,4 @@ void RobustKernel::setDelta(double delta)
   _delta = delta;
 }
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o

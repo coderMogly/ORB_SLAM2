@@ -31,8 +31,8 @@
 // Added EdgeSE3ProjectXYZOnlyPose (unary edge to optimize only the camera pose)
 // Added EdgeStereoSE3ProjectXYZOnlyPose (unary edge to optimize only the camera pose)
 
-#ifndef G2O_SIX_DOF_TYPES_EXPMAP
-#define G2O_SIX_DOF_TYPES_EXPMAP
+#ifndef ORB_SLAM2_G2O_SIX_DOF_TYPES_EXPMAP
+#define ORB_SLAM2_G2O_SIX_DOF_TYPES_EXPMAP
 
 #include "../core/base_vertex.h"
 #include "../core/base_binary_edge.h"
@@ -42,7 +42,7 @@
 #include "types_sba.h"
 #include <Eigen/Geometry>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 namespace types_six_dof_expmap {
 void init();
 }

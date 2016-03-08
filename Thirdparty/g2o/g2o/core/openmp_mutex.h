@@ -24,20 +24,20 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_OPENMP_MUTEX
-#define G2O_OPENMP_MUTEX
+#ifndef ORB_SLAM2_G2O_OPENMP_MUTEX
+#define ORB_SLAM2_G2O_OPENMP_MUTEX
 
 #include "../../config.h"
 
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
 #include <omp.h>
 #else
 #include <cassert>
 #endif
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
 
   /**
    * \brief Mutex realized via OpenMP

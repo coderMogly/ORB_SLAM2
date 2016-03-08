@@ -24,15 +24,15 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_SBA_TYPES
-#define G2O_SBA_TYPES
+#ifndef ORB_SLAM2_G2O_SBA_TYPES
+#define ORB_SLAM2_G2O_SBA_TYPES
 
 #include "../core/base_vertex.h"
 
 #include <Eigen/Geometry>
 #include <iostream>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 /**
  * \brief Point vertex, XYZ

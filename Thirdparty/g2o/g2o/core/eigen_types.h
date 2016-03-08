@@ -24,13 +24,13 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_EIGEN_TYPES_H
-#define G2O_EIGEN_TYPES_H
+#ifndef ORB_SLAM2_G2O_EIGEN_TYPES_H
+#define ORB_SLAM2_G2O_EIGEN_TYPES_H
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   typedef Eigen::Matrix<int,2,1,Eigen::ColMajor>                                  Vector2I;
   typedef Eigen::Matrix<int,3,1,Eigen::ColMajor>                                  Vector3I;
@@ -68,6 +68,6 @@ namespace g2o {
   typedef Eigen::Transform<double,2,Eigen::Affine,Eigen::ColMajor>                Affine2D;
   typedef Eigen::Transform<double,3,Eigen::Affine,Eigen::ColMajor>                Affine3D;
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o
 
 #endif

@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_OPTMIZATION_ALGORITHM_PROPERTY_H
-#define G2O_OPTMIZATION_ALGORITHM_PROPERTY_H
+#ifndef ORB_SLAM2_G2O_OPTMIZATION_ALGORITHM_PROPERTY_H
+#define ORB_SLAM2_G2O_OPTMIZATION_ALGORITHM_PROPERTY_H
 
 #include "../../config.h"
 #include "../stuff/misc.h"
@@ -37,9 +37,9 @@
 
 
 // define to get some verbose output
-//#define G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
+//#define ORB_SLAM2_G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   // forward decl
   class  OptimizationAlgorithm;
@@ -122,7 +122,7 @@ namespace g2o {
       RegisterOptimizationAlgorithmProxy(AbstractOptimizationAlgorithmCreator* c)
       {
         _creator = c;
-#ifdef G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
         std::cout << __FUNCTION__ << ": Registering " << _creator->property().name << " of type " << typeid(*_creator).name() << std::endl;
 #endif
         OptimizationAlgorithmFactory::instance()->registerSolver(c);
@@ -130,7 +130,7 @@ namespace g2o {
 
       ~RegisterOptimizationAlgorithmProxy()
       {
-#ifdef G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_OPTIMIZATION_ALGORITHM_FACTORY
         std::cout << __FUNCTION__ << ": Unregistering " << _creator->property().name << std::endl;
 #endif
         OptimizationAlgorithmFactory::instance()->unregisterSolver(_creator);
@@ -141,27 +141,27 @@ namespace g2o {
 
 }
 
-#if defined _MSC_VER && defined G2O_SHARED_LIBS
-#  define G2O_OAF_EXPORT __declspec(dllexport)
-#  define G2O_OAF_IMPORT __declspec(dllimport)
+#if defined _MSC_VER && defined ORB_SLAM2_G2O_SHARED_LIBS
+#  define ORB_SLAM2_G2O_OAF_EXPORT __declspec(dllexport)
+#  define ORB_SLAM2_G2O_OAF_IMPORT __declspec(dllimport)
 #else
-#  define G2O_OAF_EXPORT
-#  define G2O_OAF_IMPORT
+#  define ORB_SLAM2_G2O_OAF_EXPORT
+#  define ORB_SLAM2_G2O_OAF_IMPORT
 #endif
 
-#define G2O_REGISTER_OPTIMIZATION_LIBRARY(libraryname) \
-    extern "C" void G2O_OAF_EXPORT g2o_optimization_library_##libraryname(void) {}
+#define ORB_SLAM2_G2O_REGISTER_OPTIMIZATION_LIBRARY(libraryname) \
+    extern "C" void ORB_SLAM2_G2O_OAF_EXPORT ORB_SLAM2_g2o_optimization_library_##libraryname(void) {}
 
-#define G2O_USE_OPTIMIZATION_LIBRARY(libraryname) \
-    extern "C" void G2O_OAF_IMPORT g2o_optimization_library_##libraryname(void); \
-    static g2o::ForceLinker g2o_force_optimization_algorithm_library_##libraryname(g2o_optimization_library_##libraryname);
+#define ORB_SLAM2_G2O_USE_OPTIMIZATION_LIBRARY(libraryname) \
+    extern "C" void ORB_SLAM2_G2O_OAF_IMPORT ORB_SLAM2_g2o_optimization_library_##libraryname(void); \
+    static ORB_SLAM2_g2o::ForceLinker ORB_SLAM2_g2o_force_optimization_algorithm_library_##libraryname(ORB_SLAM2_g2o_optimization_library_##libraryname);
 
-#define G2O_REGISTER_OPTIMIZATION_ALGORITHM(optimizername, instance) \
-    extern "C" void G2O_OAF_EXPORT g2o_optimization_algorithm_##optimizername(void) {} \
-    static g2o::RegisterOptimizationAlgorithmProxy g_optimization_algorithm_proxy_##optimizername(instance);
+#define ORB_SLAM2_G2O_REGISTER_OPTIMIZATION_ALGORITHM(optimizername, instance) \
+    extern "C" void ORB_SLAM2_G2O_OAF_EXPORT ORB_SLAM2_g2o_optimization_algorithm_##optimizername(void) {} \
+    static ORB_SLAM2_g2o::RegisterOptimizationAlgorithmProxy g_optimization_algorithm_proxy_##optimizername(instance);
 
-#define G2O_USE_OPTIMIZATION_ALGORITHM(optimizername) \
-    extern "C" void G2O_OAF_IMPORT g2o_optimization_algorithm_##optimizername(void); \
-    static g2o::ForceLinker g2o_force_optimization_algorithm_link_##optimizername(g2o_optimization_algorithm_##optimizername);
+#define ORB_SLAM2_G2O_USE_OPTIMIZATION_ALGORITHM(optimizername) \
+    extern "C" void ORB_SLAM2_G2O_OAF_IMPORT ORB_SLAM2_g2o_optimization_algorithm_##optimizername(void); \
+    static ORB_SLAM2_g2o::ForceLinker ORB_SLAM2_g2o_force_optimization_algorithm_link_##optimizername(ORB_SLAM2_g2o_optimization_algorithm_##optimizername);
 
 #endif

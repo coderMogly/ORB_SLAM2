@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_OPTIMIZATION_ALGORITHM_H
-#define G2O_OPTIMIZATION_ALGORITHM_H
+#ifndef ORB_SLAM2_G2O_OPTIMIZATION_ALGORITHM_H
+#define ORB_SLAM2_G2O_OPTIMIZATION_ALGORITHM_H
 
 #include <vector>
 #include <utility>
@@ -36,7 +36,7 @@
 #include "hyper_graph.h"
 #include "sparse_block_matrix.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   class SparseOptimizer;
 

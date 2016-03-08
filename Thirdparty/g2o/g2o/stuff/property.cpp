@@ -34,7 +34,7 @@
 #include "string_tools.h"
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   BaseProperty::BaseProperty(const std::string name_) :_name(name_){
   }

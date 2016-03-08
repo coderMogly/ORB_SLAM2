@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_SPARSE_BLOCK_MATRIX_CCS_H
-#define G2O_SPARSE_BLOCK_MATRIX_CCS_H
+#ifndef ORB_SLAM2_G2O_SPARSE_BLOCK_MATRIX_CCS_H
+#define ORB_SLAM2_G2O_SPARSE_BLOCK_MATRIX_CCS_H
 
 #include <vector>
 #include <cassert>
@@ -40,7 +40,7 @@
 #include <tr1/unordered_map>
 #endif
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   /**
    * \brief Sparse matrix which uses blocks
@@ -113,7 +113,7 @@ namespace g2o {
         Eigen::Map<Eigen::VectorXd> destVec(dest, destSize);
         Eigen::Map<const Eigen::VectorXd> srcVec(src, rows());
 
-#      ifdef G2O_OPENMP
+#      ifdef ORB_SLAM2_G2O_OPENMP
 #      pragma omp parallel for default (shared) schedule(dynamic, 10)
 #      endif
         for (int i=0; i < static_cast<int>(_blockCols.size()); ++i){

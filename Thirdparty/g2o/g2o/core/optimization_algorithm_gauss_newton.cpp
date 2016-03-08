@@ -36,7 +36,7 @@
 #include "sparse_optimizer.h"
 using namespace std;
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   OptimizationAlgorithmGaussNewton::OptimizationAlgorithmGaussNewton(Solver* solver) :
     OptimizationAlgorithmWithHessian(solver)

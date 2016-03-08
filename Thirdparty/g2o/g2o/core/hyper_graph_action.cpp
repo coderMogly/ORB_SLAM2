@@ -31,7 +31,7 @@
 
 #include <iostream>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace std;
 
   HyperGraphActionLibrary* HyperGraphActionLibrary::actionLibInstance = 0;
@@ -117,7 +117,7 @@ namespace g2o {
 
   bool HyperGraphElementActionCollection::registerAction(HyperGraphElementAction* action)
   {
-#  ifdef G2O_DEBUG_ACTIONLIB
+#  ifdef ORB_SLAM2_G2O_DEBUG_ACTIONLIB
     cerr << __PRETTY_FUNCTION__ << " " << action->name() << " " << action->typeName() << endl;
 #  endif
     if (action->name()!=name()){
@@ -183,7 +183,7 @@ namespace g2o {
       }
     }
     if (! collection) {
-#ifdef G2O_DEBUG_ACTIONLIB
+#ifdef ORB_SLAM2_G2O_DEBUG_ACTIONLIB
       cerr << __PRETTY_FUNCTION__ << ": creating collection for \"" << action->name() << "\"" << endl;
 #endif
       collection = new HyperGraphElementActionCollection(action->name());

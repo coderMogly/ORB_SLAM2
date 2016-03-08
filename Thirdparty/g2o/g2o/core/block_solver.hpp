@@ -33,7 +33,7 @@
 #include "../stuff/macros.h"
 #include "../stuff/misc.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 using namespace std;
 using namespace Eigen;
@@ -85,7 +85,7 @@ void BlockSolver<Traits>::resize(int* blockPoseIndices, int numPoseBlocks,
     _Hpl=new PoseLandmarkHessianType(blockPoseIndices, blockLandmarkIndices, numPoseBlocks, numLandmarkBlocks);
     _HplCCS = new SparseBlockMatrixCCS<PoseLandmarkMatrixType>(_Hpl->rowBlockIndices(), _Hpl->colBlockIndices());
     _HschurTransposedCCS = new SparseBlockMatrixCCS<PoseMatrixType>(_Hschur->colBlockIndices(), _Hschur->rowBlockIndices());
-#ifdef G2O_OPENMP
+#ifdef ORB_SLAM2_G2O_OPENMP
     _coefficientsMutex.resize(numPoseBlocks);
 #endif
   }
@@ -375,7 +375,7 @@ bool BlockSolver<Traits>::solve(){
 
   //_DInvSchur->clear();
   memset (_coefficients, 0, _sizePoses*sizeof(double));
-# ifdef G2O_OPENMP
+# ifdef ORB_SLAM2_G2O_OPENMP
 # pragma omp parallel for default (shared) schedule(dynamic, 10)
 # endif
   for (int landmarkIndex = 0; landmarkIndex < static_cast<int>(_Hll->blockCols().size()); ++landmarkIndex) {
@@ -407,7 +407,7 @@ bool BlockSolver<Traits>::solve(){
       PoseLandmarkMatrixType BDinv = (*Bi)*(Dinv);
       assert(_HplCCS->rowBaseOfBlock(i1) < _sizePoses && "Index out of bounds");
       typename PoseVectorType::MapType Bb(&_coefficients[_HplCCS->rowBaseOfBlock(i1)], Bi->rows());
-#    ifdef G2O_OPENMP
+#    ifdef ORB_SLAM2_G2O_OPENMP
       ScopedOpenMPMutex mutexLock(&_coefficientsMutex[i1]);
 #    endif
       Bb.noalias() += (*Bi)*db;
@@ -502,7 +502,7 @@ template <typename Traits>
 bool BlockSolver<Traits>::buildSystem()
 {
   // clear b vector
-# ifdef G2O_OPENMP
+# ifdef ORB_SLAM2_G2O_OPENMP
 # pragma omp parallel for default (shared) if (_optimizer->indexMapping().size() > 1000)
 # endif
   for (int i = 0; i < static_cast<int>(_optimizer->indexMapping().size()); ++i) {
@@ -518,7 +518,7 @@ bool BlockSolver<Traits>::buildSystem()
 
   // resetting the terms for the pairwise constraints
   // built up the current system by storing the Hessian blocks in the edges and vertices
-# ifndef G2O_OPENMP
+# ifndef ORB_SLAM2_G2O_OPENMP
   // no threading, we do not need to copy the workspace
   JacobianWorkspace& jacobianWorkspace = _optimizer->jacobianWorkspace();
 # else
@@ -545,7 +545,7 @@ bool BlockSolver<Traits>::buildSystem()
   }
 
   // flush the current system in a sparse block matrix
-# ifdef G2O_OPENMP
+# ifdef ORB_SLAM2_G2O_OPENMP
 # pragma omp parallel for default (shared) if (_optimizer->indexMapping().size() > 1000)
 # endif
   for (int i = 0; i < static_cast<int>(_optimizer->indexMapping().size()); ++i) {
@@ -567,7 +567,7 @@ bool BlockSolver<Traits>::setLambda(double lambda, bool backup)
     _diagonalBackupPose.resize(_numPoses);
     _diagonalBackupLandmark.resize(_numLandmarks);
   }
-# ifdef G2O_OPENMP
+# ifdef ORB_SLAM2_G2O_OPENMP
 # pragma omp parallel for default (shared) if (_numPoses > 100)
 # endif
   for (int i = 0; i < _numPoses; ++i) {
@@ -576,7 +576,7 @@ bool BlockSolver<Traits>::setLambda(double lambda, bool backup)
       _diagonalBackupPose[i] = b->diagonal();
     b->diagonal().array() += lambda;
   }
-# ifdef G2O_OPENMP
+# ifdef ORB_SLAM2_G2O_OPENMP
 # pragma omp parallel for default (shared) if (_numLandmarks > 100)
 # endif
   for (int i = 0; i < _numLandmarks; ++i) {

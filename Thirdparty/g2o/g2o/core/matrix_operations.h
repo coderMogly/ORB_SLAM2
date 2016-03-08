@@ -24,12 +24,12 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_CORE_MATRIX_OPERATIONS_H
-#define G2O_CORE_MATRIX_OPERATIONS_H
+#ifndef ORB_SLAM2_G2O_CORE_MATRIX_OPERATIONS_H
+#define ORB_SLAM2_G2O_CORE_MATRIX_OPERATIONS_H
 
 #include <Eigen/Core>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   namespace internal {
 
     template<typename MatrixType>
@@ -69,6 +69,6 @@ namespace g2o {
     }
 
   } // end namespace internal
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o
 
 #endif

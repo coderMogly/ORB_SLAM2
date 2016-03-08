@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_AIS_GENERAL_DIJKSTRA_HH
-#define G2O_AIS_GENERAL_DIJKSTRA_HH
+#ifndef ORB_SLAM2_G2O_AIS_GENERAL_DIJKSTRA_HH
+#define ORB_SLAM2_G2O_AIS_GENERAL_DIJKSTRA_HH
 
 #include <map>
 #include <set>
@@ -33,7 +33,7 @@
 
 #include "hyper_graph.h"
 
-namespace g2o{
+namespace ORB_SLAM2_g2o{
 
   struct  HyperDijkstra{
     struct  CostFunction {

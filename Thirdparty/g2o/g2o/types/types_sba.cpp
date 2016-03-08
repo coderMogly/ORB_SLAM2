@@ -27,7 +27,7 @@
 #include "types_sba.h"
 #include <iostream>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace std;
 

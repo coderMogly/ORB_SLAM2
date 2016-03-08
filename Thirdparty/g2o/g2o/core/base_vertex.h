@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_BASE_VERTEX_H
-#define G2O_BASE_VERTEX_H
+#ifndef ORB_SLAM2_G2O_BASE_VERTEX_H
+#define ORB_SLAM2_G2O_BASE_VERTEX_H
 
 #include "optimizable_graph.h"
 #include "creators.h"
@@ -37,7 +37,7 @@
 #include <Eigen/StdVector>
 #include <stack>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   using namespace Eigen;
 
@@ -114,7 +114,7 @@ namespace g2o {
 
 #include "base_vertex.hpp"
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o
 
 
 #endif

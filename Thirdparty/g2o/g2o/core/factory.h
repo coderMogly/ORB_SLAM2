@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_FACTORY_H
-#define G2O_FACTORY_H
+#ifndef ORB_SLAM2_G2O_FACTORY_H
+#define ORB_SLAM2_G2O_FACTORY_H
 
 #include "../../config.h"
 #include "../stuff/misc.h"
@@ -37,9 +37,9 @@
 #include <iostream>
 
 // define to get some verbose output
-//#define G2O_DEBUG_FACTORY
+//#define ORB_SLAM2_G2O_DEBUG_FACTORY
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   class AbstractHyperGraphElementCreator;
   
@@ -133,7 +133,7 @@ namespace g2o {
     public:
       RegisterTypeProxy(const std::string& name) : _name(name)
       {
-#ifdef G2O_DEBUG_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
         std::cout << __FUNCTION__ << ": Registering " << _name << " of type " << typeid(T).name() << std::endl;
 #endif
         Factory::instance()->registerType(_name, new HyperGraphElementCreator<T>());
@@ -141,7 +141,7 @@ namespace g2o {
 
       ~RegisterTypeProxy()
       {
-#ifdef G2O_DEBUG_FACTORY
+#ifdef ORB_SLAM2_G2O_DEBUG_FACTORY
         std::cout << __FUNCTION__ << ": Unregistering " << _name << " of type " << typeid(T).name() << std::endl;
 #endif
         Factory::instance()->unregisterType(_name);
@@ -151,29 +151,29 @@ namespace g2o {
       std::string _name;
   };
 
-#if defined _MSC_VER && defined G2O_SHARED_LIBS
-#  define G2O_FACTORY_EXPORT __declspec(dllexport)
-#  define G2O_FACTORY_IMPORT __declspec(dllimport)
+#if defined _MSC_VER && defined ORB_SLAM2_G2O_SHARED_LIBS
+#  define ORB_SLAM2_G2O_FACTORY_EXPORT __declspec(dllexport)
+#  define ORB_SLAM2_G2O_FACTORY_IMPORT __declspec(dllimport)
 #else
-#  define G2O_FACTORY_EXPORT
-#  define G2O_FACTORY_IMPORT
+#  define ORB_SLAM2_G2O_FACTORY_EXPORT
+#  define ORB_SLAM2_G2O_FACTORY_IMPORT
 #endif
 
   // These macros are used to automate registering types and forcing linkage
-#define G2O_REGISTER_TYPE(name, classname) \
-    extern "C" void G2O_FACTORY_EXPORT g2o_type_##classname(void) {} \
-    static g2o::RegisterTypeProxy<classname> g_type_proxy_##classname(#name);
+#define ORB_SLAM2_G2O_REGISTER_TYPE(name, classname) \
+    extern "C" void ORB_SLAM2_G2O_FACTORY_EXPORT ORB_SLAM2_g2o_type_##classname(void) {} \
+    static ORB_SLAM2_g2o::RegisterTypeProxy<classname> g_type_proxy_##classname(#name);
 
-#define G2O_USE_TYPE_BY_CLASS_NAME(classname) \
-    extern "C" void G2O_FACTORY_IMPORT g2o_type_##classname(void); \
-    static g2o::ForceLinker proxy_##classname(g2o_type_##classname);
+#define ORB_SLAM2_G2O_USE_TYPE_BY_CLASS_NAME(classname) \
+    extern "C" void ORB_SLAM2_G2O_FACTORY_IMPORT ORB_SLAM2_g2o_type_##classname(void); \
+    static ORB_SLAM2_g2o::ForceLinker proxy_##classname(ORB_SLAM2_g2o_type_##classname);
 
-#define G2O_REGISTER_TYPE_GROUP(typeGroupName) \
-    extern "C" void G2O_FACTORY_EXPORT g2o_type_group_##typeGroupName(void) {}
+#define ORB_SLAM2_G2O_REGISTER_TYPE_GROUP(typeGroupName) \
+    extern "C" void ORB_SLAM2_G2O_FACTORY_EXPORT ORB_SLAM2_g2o_type_group_##typeGroupName(void) {}
 
-#define G2O_USE_TYPE_GROUP(typeGroupName) \
-    extern "C" void G2O_FACTORY_IMPORT g2o_type_group_##typeGroupName(void); \
-    static g2o::ForceLinker g2o_force_type_link_##typeGroupName(g2o_type_group_##typeGroupName);
+#define ORB_SLAM2_G2O_USE_TYPE_GROUP(typeGroupName) \
+    extern "C" void ORB_SLAM2_G2O_FACTORY_IMPORT ORB_SLAM2_g2o_type_group_##typeGroupName(void); \
+    static ORB_SLAM2_g2o::ForceLinker ORB_SLAM2_g2o_force_type_link_##typeGroupName(ORB_SLAM2_g2o_type_group_##typeGroupName);
 }
 
 #endif

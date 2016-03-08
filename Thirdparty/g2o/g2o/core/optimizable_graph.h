@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_AIS_OPTIMIZABLE_GRAPH_HH_
-#define G2O_AIS_OPTIMIZABLE_GRAPH_HH_
+#ifndef ORB_SLAM2_G2O_AIS_OPTIMIZABLE_GRAPH_HH_
+#define ORB_SLAM2_G2O_AIS_OPTIMIZABLE_GRAPH_HH_
 
 #include <set>
 #include <iostream>
@@ -42,7 +42,7 @@
 
 #include "../stuff/macros.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   class HyperGraphAction;
   struct OptimizationAlgorithmProperty;
@@ -296,10 +296,10 @@ namespace g2o {
 
         //! temporary index of this node in the parameter vector obtained from linearization
         int hessianIndex() const { return _hessianIndex;}
-        int G2O_ATTRIBUTE_DEPRECATED(tempIndex() const) { return hessianIndex();}
+        int ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(tempIndex() const) { return hessianIndex();}
         //! set the temporary index of the vertex in the parameter blocks
         void setHessianIndex(int ti) { _hessianIndex = ti;}
-        void G2O_ATTRIBUTE_DEPRECATED(setTempIndex(int ti)) { setHessianIndex(ti);}
+        void ORB_SLAM2_G2O_ATTRIBUTE_DEPRECATED(setTempIndex(int ti)) { setHessianIndex(ti);}
 
         //! true => this node is fixed during the optimization
         bool fixed() const {return _fixed;}

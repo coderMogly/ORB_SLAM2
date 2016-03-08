@@ -24,8 +24,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_BLOCK_SOLVER_H
-#define G2O_BLOCK_SOLVER_H
+#ifndef ORB_SLAM2_G2O_BLOCK_SOLVER_H
+#define ORB_SLAM2_G2O_BLOCK_SOLVER_H
 #include <Eigen/Core>
 #include "solver.h"
 #include "linear_solver.h"
@@ -34,7 +34,7 @@
 #include "openmp_mutex.h"
 #include "../../config.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
   using namespace Eigen;
 
   /**
@@ -162,7 +162,7 @@ namespace g2o {
       std::vector<PoseVectorType, Eigen::aligned_allocator<PoseVectorType> > _diagonalBackupPose;
       std::vector<LandmarkVectorType, Eigen::aligned_allocator<LandmarkVectorType> > _diagonalBackupLandmark;
 
-#    ifdef G2O_OPENMP
+#    ifdef ORB_SLAM2_G2O_OPENMP
       std::vector<OpenMPMutex> _coefficientsMutex;
 #    endif
 

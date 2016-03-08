@@ -28,7 +28,7 @@
 #include <iostream>
 
 using namespace std;
-using namespace g2o;
+using namespace ORB_SLAM2_g2o;
 using namespace Eigen;
 
 typedef SparseBlockMatrix< MatrixXd >

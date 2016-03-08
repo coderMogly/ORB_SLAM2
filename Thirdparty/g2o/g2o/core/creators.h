@@ -24,15 +24,15 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef G2O_CREATORS_H
-#define G2O_CREATORS_H
+#ifndef ORB_SLAM2_G2O_CREATORS_H
+#define ORB_SLAM2_G2O_CREATORS_H
 
 #include "hyper_graph.h"
 
 #include <string>
 #include <typeinfo>
 
-namespace g2o
+namespace ORB_SLAM2_g2o
 {
 
   /**

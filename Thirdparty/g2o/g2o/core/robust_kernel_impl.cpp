@@ -29,7 +29,7 @@
 
 #include <cmath>
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 RobustKernelScaleDelta::RobustKernelScaleDelta(const RobustKernelPtr& kernel, double delta) :
   RobustKernel(delta),
@@ -163,11 +163,11 @@ void RobustKernelDCS::robustify(double e2, Eigen::Vector3d& rho) const
 
 
 // register the kernel to their factory
-G2O_REGISTER_ROBUST_KERNEL(Huber, RobustKernelHuber)
-G2O_REGISTER_ROBUST_KERNEL(Tukey, RobustKernelTukey)
-G2O_REGISTER_ROBUST_KERNEL(PseudoHuber, RobustKernelPseudoHuber)
-G2O_REGISTER_ROBUST_KERNEL(Cauchy, RobustKernelCauchy)
-G2O_REGISTER_ROBUST_KERNEL(Saturated, RobustKernelSaturated)
-G2O_REGISTER_ROBUST_KERNEL(DCS, RobustKernelDCS)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(Huber, RobustKernelHuber)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(Tukey, RobustKernelTukey)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(PseudoHuber, RobustKernelPseudoHuber)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(Cauchy, RobustKernelCauchy)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(Saturated, RobustKernelSaturated)
+ORB_SLAM2_G2O_REGISTER_ROBUST_KERNEL(DCS, RobustKernelDCS)
 
-} // end namespace g2o
+} // end namespace ORB_SLAM2_g2o

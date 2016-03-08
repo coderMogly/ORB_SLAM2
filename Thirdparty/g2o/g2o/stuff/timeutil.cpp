@@ -36,7 +36,7 @@
 #include <unistd.h>
 #endif
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
 #ifdef _WINDOWS
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)

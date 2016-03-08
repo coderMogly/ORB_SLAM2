@@ -26,7 +26,7 @@
 
 #include "parameter.h"
 
-namespace g2o {
+namespace ORB_SLAM2_g2o {
 
   Parameter::Parameter() : _id(-1)
   {
