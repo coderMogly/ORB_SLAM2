@@ -30,7 +30,7 @@ namespace ORB_SLAM2
 
 LocalMapping::LocalMapping(Map *pMap, const float bMonocular):
     mbMonocular(bMonocular), mbResetRequested(false), mbFinishRequested(false), mbFinished(true), mpMap(pMap), mpLoopCloser(NULL),
-    mbAbortBA(false), mbStopped(false), mbStopRequested(false), mbNotStop(false), mbAcceptKeyFrames(true)
+    mbAbortBA(false), mbStopped(false), mbStopRequested(false), mbNotStop(false), mbAcceptKeyFrames(true), mbLocalizationRequested(false)
 {
 }
 
@@ -88,6 +88,8 @@ void LocalMapping::Run()
             {
                 mpLoopCloser->InsertKeyFrame(mpCurrentKeyFrame);
             }
+
+            SetLocalizationRequest(true);
         }
         else if(Stop())
         {
@@ -569,7 +571,8 @@ bool LocalMapping::Stop()
     if(mbStopRequested && !mbNotStop)
     {
         mbStopped = true;
-        cout << "Local Mapping STOP" << endl;
+        if(!mbLocalizationRequested)
+            cout << "Local Mapping STOP" << endl;
         return true;
     }
 
@@ -600,7 +603,8 @@ void LocalMapping::Release()
         delete *lit;
     mlNewKeyFrames.clear();
 
-    cout << "Local Mapping RELEASE" << endl;
+    if(!mbLocalizationRequested)
+        cout << "Local Mapping RELEASE" << endl;
 }
 
 bool LocalMapping::AcceptKeyFrames()
@@ -760,6 +764,18 @@ bool LocalMapping::isFinished()
 {
     unique_lock<mutex> lock(mMutexFinish);
     return mbFinished;
+}
+
+bool LocalMapping::isLocalizationRequested()
+{
+    unique_lock<mutex> lock(mMutexLocalization);
+    return mbLocalizationRequested;
+}
+
+void LocalMapping::SetLocalizationRequest(bool flag)
+{
+    unique_lock<mutex> lock(mMutexLocalization);
+    mbLocalizationRequested = flag;
 }
 
 } //namespace ORB_SLAM
