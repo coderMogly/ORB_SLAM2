@@ -423,4 +423,35 @@ void System::SaveTrajectoryKITTI(const string &filename)
     cout << endl << "trajectory saved!" << endl;
 }
 
+void System::SaveMap(const string &filename)
+{
+  cout << endl << "Saving map to " << filename << " ..." << endl;
+
+  //world frame defined by pose of first keyframe
+  vector<KeyFrame*> vpKFs = mpMap->GetAllKeyFrames();
+  sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
+  cv::Mat Two = vpKFs[0]->GetPoseInverse();
+  cv::Mat Rwo = Two.rowRange(0,3).colRange(0,3);
+  cv::Mat two = Two.rowRange(0,3).col(3);
+
+  ofstream f;
+  f.open(filename.c_str());
+  f << fixed;
+
+  vector<MapPoint*> vpMPs = mpMap->GetAllMapPoints();
+  for(vector<MapPoint*>::iterator vit=vpMPs.begin(), vend=vpMPs.end(); vit!=vend; vit++)
+  {
+      MapPoint* pMP = *vit;
+      if(pMP->isBad())
+          continue;
+
+      cv::Mat pos = Rwo * pMP->GetWorldPos() + two;
+
+      f << setprecision(6) << pos.at<float>(0) << " " << pos.at<float>(1)  << " " << pos.at<float>(2) << endl;
+  }
+
+  f.close();
+  cout << endl << "map saved!" << endl;
+}
+
 } //namespace ORB_SLAM
