@@ -261,4 +261,16 @@ void MapDrawer::GetCurrentOpenGLCameraMatrix(pangolin::OpenGlMatrix &M)
         M.SetIdentity();
 }
 
+void MapDrawer::SetCurrentCameraPose(const cv::Mat &Tcw, const double &ts) {
+    unique_lock<mutex> lock(mMutexCamera);
+    mCameraPose = Tcw.clone();
+    mCameraTime = ts;
+}
+
+void MapDrawer::GetCurrentCameraPose(cv::Mat &Tcw, double &ts) {
+    unique_lock<mutex> lock(mMutexCamera);
+    Tcw = mCameraPose;
+    ts = mCameraTime;
+}
+
 } //namespace ORB_SLAM
