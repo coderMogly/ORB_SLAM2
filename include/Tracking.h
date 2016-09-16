@@ -55,7 +55,8 @@ class Tracking
 
 public:
     Tracking(System* pSys, ORBVocabulary* pVoc, FrameDrawer* pFrameDrawer, MapDrawer* pMapDrawer, Map* pMap,
-             KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor);
+             KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor,
+             bool initTransformation=false);
 
     // Preprocess the input and call Track(). Extract features and performs stereo matching.
     cv::Mat GrabImageStereo(const cv::Mat &imRectLeft,const cv::Mat &imRectRight, const double &timestamp);
@@ -114,6 +115,9 @@ public:
     bool mbOnlyTracking;
 
     void Reset();
+
+    bool isInitTransformationRequested(double *initTimeStamp = NULL, double *currentTimeStamp = NULL);
+    void SetInitTransformation(const cv::Mat &Tcw, const float &scale);
 
 protected:
 
@@ -214,6 +218,13 @@ protected:
     bool mbRGB;
 
     list<MapPoint*> mlpTemporalPoints;
+
+    //Initial transformation
+    bool mbInitTransformation;
+    bool mbInitRequested;
+    cv::Mat mInitTcw;
+    float mInitScale;
+    std::mutex mMutexInit;
 };
 
 } //namespace ORB_SLAM
