@@ -72,6 +72,9 @@ public:
         return mlNewKeyFrames.size();
     }
 
+    bool isLocalizationRequested();
+    void SetLocalizationRequest(bool flag);
+
 protected:
 
     bool CheckNewKeyFrames();
@@ -121,6 +124,9 @@ protected:
 
     bool mbAcceptKeyFrames;
     std::mutex mMutexAccept;
+
+    bool mbLocalizationRequested;
+    std::mutex mMutexLocalization;
 };
 
 } //namespace ORB_SLAM
