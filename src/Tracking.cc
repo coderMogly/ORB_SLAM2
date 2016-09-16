@@ -43,10 +43,11 @@ using namespace std;
 namespace ORB_SLAM2
 {
 
-Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Map *pMap, KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor):
+Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Map *pMap, KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor, bool initTransformation):
     mState(NO_IMAGES_YET), mSensor(sensor), mbOnlyTracking(false), mbVO(false), mpLoopClosing(NULL), mpORBVocabulary(pVoc),
     mpKeyFrameDB(pKFDB), mpInitializer(static_cast<Initializer*>(NULL)), mpSystem(pSys), mpViewer(NULL),
-    mpFrameDrawer(pFrameDrawer), mpMapDrawer(pMapDrawer), mpMap(pMap), mnLastRelocFrameId(0)
+    mpFrameDrawer(pFrameDrawer), mpMapDrawer(pMapDrawer), mpMap(pMap), mnLastRelocFrameId(0),
+    mbInitTransformation(initTransformation), mbInitRequested(false), mInitTcw(cv::Mat::eye(4,4,CV_32F)), mInitScale(1.0)
 {
     // Load camera parameters from settings file
 
@@ -696,10 +697,36 @@ void Tracking::CreateInitialMapMonocular()
         return;
     }
 
+    if(mbInitTransformation)
+    {
+        //set initialization request
+        {
+            unique_lock<mutex> lock(mMutexInit);
+            mbInitRequested = true;
+        }
+        //wait until transformation was set
+        while(isInitTransformationRequested())
+        {
+            usleep(1000);
+        }
+    }
+
     // Scale initial baseline
     cv::Mat Tc2w = pKFcur->GetPose();
-    Tc2w.col(3).rowRange(0,3) = Tc2w.col(3).rowRange(0,3)*invMedianDepth;
+    float scale = invMedianDepth;
+    if(mbInitTransformation)
+    {
+        scale = mInitScale/cv::norm(Tc2w.col(3).rowRange(0,3));
+    }
+    Tc2w.col(3).rowRange(0,3) = Tc2w.col(3).rowRange(0,3)*scale;
     pKFcur->SetPose(Tc2w);
+
+    // Set initial transformation
+    if(mbInitTransformation)
+    {
+        pKFini->SetPose(pKFini->GetPose() * mInitTcw);
+        pKFcur->SetPose(pKFcur->GetPose() * mInitTcw);
+    }
 
     // Scale points
     vector<MapPoint*> vpAllMapPoints = pKFini->GetMapPointMatches();
@@ -708,7 +735,15 @@ void Tracking::CreateInitialMapMonocular()
         if(vpAllMapPoints[iMP])
         {
             MapPoint* pMP = vpAllMapPoints[iMP];
-            pMP->SetWorldPos(pMP->GetWorldPos()*invMedianDepth);
+            pMP->SetWorldPos(pMP->GetWorldPos()*scale);
+            // Transform points
+            if(mbInitTransformation)
+            {
+                cv::Mat initTwc = mInitTcw.inv();
+                cv::Mat initRwc = initTwc.rowRange(0,3).colRange(0,3);
+                cv::Mat inittwc = initTwc.rowRange(0,3).col(3);
+                pMP->SetWorldPos(initRwc*pMP->GetWorldPos()+inittwc);
+            }
         }
     }
 
@@ -1605,6 +1640,38 @@ void Tracking::InformOnlyTracking(const bool &flag)
     mbOnlyTracking = flag;
 }
 
+bool Tracking::isInitTransformationRequested()
+{
+    double dummy;
+    return isInitTransformationRequested(dummy, dummy);
+}
+
+bool Tracking::isInitTransformationRequested(double& initTimeStamp)
+{
+    double dummy;
+    return isInitTransformationRequested(initTimeStamp, dummy);
+}
+
+bool Tracking::isInitTransformationRequested(double& initTimeStamp, double& currentTimeStamp)
+{
+    unique_lock<mutex> lock(mMutexInit);
+    initTimeStamp = mInitialFrame.mTimeStamp;
+    currentTimeStamp = mCurrentFrame.mTimeStamp;
+    return mbInitRequested;
+}
+
+void Tracking::SetInitTransformation(cv::Mat Tcw)
+{
+  SetInitTransformation(Tcw, 1.0);
+}
+
+void Tracking::SetInitTransformation(cv::Mat Tcw, float scale)
+{
+    unique_lock<mutex> lock(mMutexInit);
+    mInitTcw = Tcw;
+    mInitScale = scale;
+    mbInitRequested = false;
+}
 
 
 } //namespace ORB_SLAM
