@@ -43,15 +43,70 @@ using namespace std;
 namespace ORB_SLAM2
 {
 
-Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Map *pMap, KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor, bool initTransformation):
+Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Map *pMap, KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor, bool readImagesFromFiles, bool initTransformation):
     mState(NO_IMAGES_YET), mSensor(sensor), mbOnlyTracking(false), mbVO(false), mpLoopClosing(NULL), mpORBVocabulary(pVoc),
     mpKeyFrameDB(pKFDB), mpInitializer(static_cast<Initializer*>(NULL)), mpSystem(pSys), mpViewer(NULL),
     mpFrameDrawer(pFrameDrawer), mpMapDrawer(pMapDrawer), mpMap(pMap), mnLastRelocFrameId(0),
+    mbReadImagesFromFiles(readImagesFromFiles), mCurrentFile(0), mbPaused(false),
     mbInitTransformation(initTransformation), mbInitRequested(false), mInitTcw(cv::Mat::eye(4,4,CV_32F)), mInitScale(1.0)
 {
+    // Load settings file
+    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
+    
+    // Load images and timestamps
+    if(mbReadImagesFromFiles)
+    {
+        cout << "Images: " << endl;
+
+        mvImageFileList.clear();
+        string imageFileList;
+        fSettings["Image.fileList"] >> imageFileList;
+        ifstream flFile(imageFileList);
+        if(flFile.is_open())
+        {
+            cout << "- File list:  " << imageFileList << endl;
+            string line;
+            while(getline(flFile,line))
+            {
+                mvImageFileList.push_back(line);
+            }
+        }
+        else
+        {
+            throw std::invalid_argument("Invalid file list: "+imageFileList);
+        }
+        flFile.close();
+
+        mvImageTimestamps.clear();
+        string imageTimestamps;
+        fSettings["Image.timestamps"] >> imageTimestamps;
+        ifstream tsFile(imageTimestamps);
+        if(tsFile.is_open())
+        {
+            cout << "- Timestamps: " << imageTimestamps << endl;
+            string line;
+            while(getline(tsFile,line))
+            {
+                mvImageTimestamps.push_back(atof(line.c_str()));
+            }
+        }
+        else
+        {
+            throw std::invalid_argument("Invalid timestamp file: "+imageTimestamps);
+        }
+        tsFile.close();
+
+        if(mvImageFileList.size() != mvImageTimestamps.size())
+        {
+            throw std::invalid_argument("fileList size unequal timestamps size.");
+        }
+
+        mbImagesRealTime = (bool)(int)fSettings["Image.realTime"];
+        cout << "- Real-time:  " << mbImagesRealTime << endl;
+    }
+
     // Load camera parameters from settings file
 
-    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
     float fx = fSettings["Camera.fx"];
     float fy = fSettings["Camera.fy"];
     float cx = fSettings["Camera.cx"];
@@ -164,6 +219,58 @@ void Tracking::SetViewer(Viewer *pViewer)
     mpViewer=pViewer;
 }
 
+void Tracking::Run()
+{
+    if(!mbReadImagesFromFiles)
+    {
+        std::cerr << "Error: Set option readImagesFromFiles to use Run() function." << std::endl;
+        return;
+    }
+
+    while(1)
+    {
+        //wait if image grabbing is paused
+        while(isGrabImagePaused())
+        {
+            usleep(1000);
+        }
+
+        //check if file is in list
+        if(mCurrentFile >= mvImageFileList.size())
+        {
+            PauseGrabImage(true);
+            std::cout << "Warning: Image file index out of bounds." << std::endl;
+            while(mCurrentFile >= mvImageFileList.size())
+            {
+                usleep(1000);
+            }
+        }
+
+        //process image
+        std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+        cv::Mat image = cv::imread(mvImageFileList[mCurrentFile], CV_LOAD_IMAGE_UNCHANGED);
+        double timestamp = mvImageTimestamps[mCurrentFile];
+        GrabImageMonocular(image,timestamp);
+        std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+        double duration = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+
+        //wait to load the next frame
+        double wait = 0;
+        if(mCurrentFile < mvImageTimestamps.size()-1)
+            wait = (mvImageTimestamps[mCurrentFile+1]-mvImageTimestamps[mCurrentFile])-duration;
+        if(wait >= 0)
+            usleep(wait*1e6);
+        else if(mbImagesRealTime)
+            std::cout << "Warning: Image " << mCurrentFile << " not processed in real-time." << std::endl;
+
+        //increase file counter
+        mCurrentFile++;
+
+        //pause image grabbing
+        if(!mbImagesRealTime)
+            PauseGrabImage(true);
+    }
+}
 
 cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp)
 {
@@ -256,9 +363,19 @@ cv::Mat Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp)
     }
 
     if(mState==NOT_INITIALIZED || mState==NO_IMAGES_YET)
-        mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    {
+        if(mbReadImagesFromFiles)
+            mCurrentFrame = Frame(mImGray,mCurrentFile,timestamp,mpIniORBextractor,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+        else
+            mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    }
     else
-        mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    {
+        if(mbReadImagesFromFiles)
+            mCurrentFrame = Frame(mImGray,mCurrentFile,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+        else
+            mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    }
 
     Track();
 
@@ -475,7 +592,10 @@ void Tracking::Track()
             if(mpMap->KeyFramesInMap()<=5)
             {
                 cout << "Track lost soon after initialisation, reseting..." << endl;
-                mpSystem->Reset();
+                if(mpSystem)
+                    mpSystem->Reset();
+                else
+                    Reset();
                 return;
             }
         }
@@ -1638,6 +1758,34 @@ void Tracking::ChangeCalibration(const string &strSettingPath)
 void Tracking::InformOnlyTracking(const bool &flag)
 {
     mbOnlyTracking = flag;
+}
+
+size_t Tracking::GetFileListSize() {
+    return mvImageFileList.size();
+}
+
+size_t Tracking::GetCurrentFile()
+{
+    unique_lock<mutex> lock(mMutexCurrentFile);
+    return mCurrentFile;
+}
+
+void Tracking::SetCurrentFile(size_t num)
+{
+    unique_lock<mutex> lock(mMutexCurrentFile);
+    mCurrentFile = num;
+}
+
+bool Tracking::isGrabImagePaused()
+{
+    unique_lock<mutex> lock(mMutexPause);
+    return mbPaused;
+}
+
+void Tracking::PauseGrabImage(bool bPause)
+{
+    unique_lock<mutex> lock(mMutexPause);
+    mbPaused = bPause;
 }
 
 bool Tracking::isInitTransformationRequested()

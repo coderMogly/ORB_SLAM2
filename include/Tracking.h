@@ -56,7 +56,7 @@ class Tracking
 public:
     Tracking(System* pSys, ORBVocabulary* pVoc, FrameDrawer* pFrameDrawer, MapDrawer* pMapDrawer, Map* pMap,
              KeyFrameDatabase* pKFDB, const string &strSettingPath, const int sensor,
-             bool initTransformation=false);
+             bool readImagesFromFiles=false, bool initTransformation=false);
 
     // Preprocess the input and call Track(). Extract features and performs stereo matching.
     cv::Mat GrabImageStereo(const cv::Mat &imRectLeft,const cv::Mat &imRectRight, const double &timestamp);
@@ -66,6 +66,9 @@ public:
     void SetLocalMapper(LocalMapping* pLocalMapper);
     void SetLoopClosing(LoopClosing* pLoopClosing);
     void SetViewer(Viewer* pViewer);
+
+    // Reads images from files (only monocular)
+    void Run();
 
     // Load new settings
     // The focal lenght should be similar or scale prediction will fail when projecting points
@@ -115,6 +118,13 @@ public:
     bool mbOnlyTracking;
 
     void Reset();
+
+    size_t GetFileListSize();
+    size_t GetCurrentFile();
+    void SetCurrentFile(size_t num);
+
+    bool isGrabImagePaused();
+    void PauseGrabImage(bool bPause);
 
     bool isInitTransformationRequested();
     bool isInitTransformationRequested(double &initTimeStamp);
@@ -221,6 +231,18 @@ protected:
     bool mbRGB;
 
     list<MapPoint*> mlpTemporalPoints;
+
+    //Read images from files
+    bool mbReadImagesFromFiles;
+    std::vector<std::string> mvImageFileList;
+    std::vector<double> mvImageTimestamps;
+    bool mbImagesRealTime;
+    size_t mCurrentFile;
+    std::mutex mMutexCurrentFile;
+
+    //Pause grab images
+    bool mbPaused;
+    std::mutex mMutexPause;
 
     //Initial transformation
     bool mbInitTransformation;
