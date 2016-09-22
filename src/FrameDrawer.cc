@@ -35,7 +35,7 @@ FrameDrawer::FrameDrawer(Map* pMap):mpMap(pMap)
     mIm = cv::Mat(480,640,CV_8UC3, cv::Scalar(0,0,0));
 }
 
-cv::Mat FrameDrawer::DrawFrame()
+cv::Mat FrameDrawer::DrawFrame(bool withTextInfo)
 {
     cv::Mat im;
     vector<cv::KeyPoint> vIniKeys; // Initialization: KeyPoints in reference frame
@@ -117,6 +117,9 @@ cv::Mat FrameDrawer::DrawFrame()
             }
         }
     }
+
+    if(!withTextInfo)
+        return im;
 
     cv::Mat imWithInfo;
     DrawTextInfo(im,state, imWithInfo);
