@@ -82,9 +82,9 @@ configure_file(config.h.in ${ORB_SLAM2_g2o_SOURCE_DIR}/config.h)
 
 # Set up the top-level include directories
 INCLUDE_DIRECTORIES(
-${ORB_SLAM2_g2o_SOURCE_DIR}/core
-${ORB_SLAM2_g2o_SOURCE_DIR}/types
-${ORB_SLAM2_g2o_SOURCE_DIR}/stuff 
+${ORB_SLAM2_g2o_SOURCE_DIR}/g2o/core
+${ORB_SLAM2_g2o_SOURCE_DIR}/g2o/types
+${ORB_SLAM2_g2o_SOURCE_DIR}/g2o/stuff 
 ${ORB_SLAM2_G2O_EIGEN3_INCLUDE})
 
 # Include the subdirectories
