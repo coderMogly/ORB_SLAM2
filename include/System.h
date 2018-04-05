@@ -58,6 +58,9 @@ public:
 
 public:
 
+    // Default Constructor
+    System() {};
+
     // Initialize the SLAM system. It launches the Local Mapping, Loop Closing and Viewer threads.
     System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor, const bool bUseViewer = true);
 
@@ -122,7 +125,7 @@ public:
     std::vector<MapPoint*> GetTrackedMapPoints();
     std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
 
-private:
+protected:
 
     // Input sensor
     eSensor mSensor;
