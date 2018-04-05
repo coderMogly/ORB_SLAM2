@@ -30,7 +30,9 @@ Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer
     mpSystem(pSystem), mpFrameDrawer(pFrameDrawer),mpMapDrawer(pMapDrawer), mpTracker(pTracking),
     mbFinishRequested(false), mbFinished(true), mbStopped(true), mbStopRequested(false)
 {
-    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
+    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ | cv::FileStorage::MEMORY);
+    if (!fSettings.isOpened())
+    	std::cerr << "Error: OrbSlamViewer failed to open settings" << std::endl;
 
     float fps = fSettings["Camera.fps"];
     if(fps<1)

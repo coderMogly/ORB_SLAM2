@@ -30,7 +30,9 @@ namespace ORB_SLAM2
 
 MapDrawer::MapDrawer(Map* pMap, const string &strSettingPath):mpMap(pMap)
 {
-    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
+    cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ | cv::FileStorage::MEMORY);
+    if (!fSettings.isOpened())
+    	std::cerr << "Error: OrbSlamMapDrawer failed to open settings" << std::endl;
 
     mKeyFrameSize = fSettings["Viewer.KeyFrameSize"];
     mKeyFrameLineWidth = fSettings["Viewer.KeyFrameLineWidth"];
