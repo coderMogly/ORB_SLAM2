@@ -59,7 +59,7 @@ namespace ORB_SLAM2_g2o {
 
     static const int Dimension = D;           ///< dimension of the estimate (minimal) in the manifold space
 
-    typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+    typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & Eigen::PacketAccessBit ? Eigen::Aligned : Eigen::Unaligned >  HessianBlockType;
 
   public:
     BaseVertex();
